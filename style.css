@@ -1,0 +1,153 @@
+/* Apply Inter font globally */
+body {
+    font-family: 'Inter', sans-serif;
+     /* Prevent horizontal scroll on body */
+    overflow-x: hidden;
+}
+
+/* Custom scrollbar for webkit browsers (optional) */
+/* Style the scrollbar track (the background) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light grey background */
+    border-radius: 10px; /* Rounded corners for the track */
+}
+
+/* Style the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: #d1d5db; /* Tailwind gray-400 */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; /* Tailwind gray-500 - darker on hover */
+}
+
+/* Style the scrollbar itself (width/height) */
+::-webkit-scrollbar {
+    width: 6px;  /* Width for vertical scrollbars */
+    height: 6px; /* Height for horizontal scrollbars */
+}
+
+/* Sidebar transition */
+/* Apply smooth transition effect for the sidebar movement */
+#sidebar {
+    transition: transform 0.3s ease-in-out;
+    /* Ensure sidebar appears above other content on mobile */
+    z-index: 40;
+}
+
+/* Hide scrollbar utility class */
+/* Hide scrollbar for elements with this class, but still allow scrolling */
+ .hide-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, Opera) */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Styling for the active sidebar link */
+/* Styles applied when a sidebar link corresponds to the currently viewed section */
+.sidebar-link-active {
+     background-color: #1f2937; /* Tailwind bg-gray-900 */
+     color: #ffffff; /* Tailwind text-white */
+}
+/* Style the SVG icon within the active link */
+.sidebar-link-active svg {
+    color: #d1d5db; /* Tailwind text-gray-300 */
+}
+
+/* Mobile Overlay */
+/* Apply smooth transition for the overlay's opacity */
+#sidebar-overlay {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* FullCalendar basic styling adjustments */
+/* Define CSS variables for easier theming of FullCalendar */
+:root {
+  --fc-border-color: #e5e7eb; /* Tailwind gray-200 for borders */
+  --fc-page-bg-color: #ffffff; /* White background */
+  --fc-neutral-bg-color: rgba(209, 213, 219, 0.3); /* Semi-transparent gray-300 */
+  --fc-list-event-hover-bg-color: #f9fafb; /* Tailwind gray-50 for list event hover */
+  --fc-today-bg-color: rgba(165, 243, 252, 0.2); /* Semi-transparent cyan-100 for today's date background */
+}
+
+/* Style the title text in the FullCalendar toolbar */
+.fc .fc-toolbar-title {
+  font-size: 1.1rem; /* Slightly smaller title on mobile */
+  font-weight: 600; /* Medium font weight */
+}
+ /* Increase title font size on larger screens (sm breakpoint and up) */
+ @media (min-width: 640px) {
+    .fc .fc-toolbar-title {
+        font-size: 1.25rem; /* Tailwind text-xl */
+    }
+ }
+
+/* Style the buttons in the FullCalendar toolbar */
+.fc .fc-button {
+  background-color: #4f46e5; /* Tailwind bg-indigo-600 */
+  border-color: #4f46e5; /* Matching border color */
+  color: white; /* White text */
+  padding: 0.3rem 0.6rem; /* Smaller padding on mobile */
+  font-size: 0.8rem; /* Smaller font size on mobile */
+  border-radius: 0.375rem; /* Tailwind rounded-md */
+  transition: background-color 0.2s; /* Smooth background color transition on hover */
+}
+ /* Increase button padding and font size on larger screens */
+ @media (min-width: 640px) {
+    .fc .fc-button {
+         padding: 0.5rem 1rem; /* Standard padding */
+         font-size: 0.875rem; /* Tailwind text-sm */
+    }
+ }
+
+/* Style FullCalendar buttons on hover */
+.fc .fc-button:hover {
+  background-color: #4338ca; /* Tailwind bg-indigo-700 - darker on hover */
+  border-color: #4338ca; /* Matching border color */
+}
+
+/* Style disabled FullCalendar buttons */
+.fc .fc-button-primary:disabled {
+  background-color: #a5b4fc; /* Tailwind indigo-300 - lighter color */
+  border-color: #a5b4fc; /* Matching border color */
+}
+
+/* Style the day numbers in the FullCalendar grid */
+.fc .fc-daygrid-day-number {
+  padding: 0.25em; /* Smaller padding on mobile */
+}
+ /* Increase day number padding on larger screens */
+ @media (min-width: 640px) {
+    .fc .fc-daygrid-day-number {
+         padding: 0.5em; /* Standard padding */
+    }
+ }
+
+/* Style the background of the current day in FullCalendar */
+.fc .fc-day-today {
+   /* Use the CSS variable defined earlier, !important to ensure override */
+   background-color: var(--fc-today-bg-color) !important;
+}
+
+/* Style the event elements within FullCalendar */
+.fc-event {
+    border-radius: 4px; /* Slightly rounded corners */
+    padding: 2px 4px; /* Small padding inside events */
+    font-size: 0.75em; /* Slightly smaller text for events */
+    cursor: pointer; /* Indicate events are clickable/draggable */
+}
+
+ /* Custom event colors using specific classes */
+ /* These classes would be added to event objects in the JavaScript */
+.fc-event.event-red { background-color: #ef4444; border-color: #dc2626; color: white; } /* Tailwind red-500 */
+.fc-event.event-blue { background-color: #3b82f6; border-color: #2563eb; color: white; } /* Tailwind blue-500 */
+.fc-event.event-yellow { background-color: #eab308; border-color: #ca8a04; color: white; } /* Tailwind yellow-500 */
+.fc-event.event-violet { background-color: #8b5cf6; border-color: #7c3aed; color: white; } /* Tailwind violet-500 */
+.fc-event.event-green { background-color: #22c55e; border-color: #16a34a; color: white; } /* Tailwind green-500 */
+
+
