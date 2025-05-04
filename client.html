@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Overview - LawPilot Client Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            overscroll-behavior-x: none; /* Prevent accidental pull-to-refresh on mobile */
+        }
+        /* Simple loading indicator style (optional) */
+        .loading-indicator {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        /* Pipeline Styles */
+        /* Container for the pipeline steps */
+        .pipeline-container {
+            display: flex;
+            justify-content: space-between; /* Distribute space evenly */
+            align-items: flex-start; /* Align items to the top */
+            position: relative;
+            margin: 2rem 0; /* Vertical margin */
+            /* Horizontal padding to prevent steps touching edges */
+            padding: 0 1rem;
+            /* Enable horizontal scrolling on smaller screens */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+        }
+        .pipeline-container::-webkit-scrollbar {
+            display: none; /* Webkit browsers (Chrome, Safari) */
+        }
+
+        /* Individual step in the pipeline */
+        .pipeline-step {
+            display: flex;
+            flex-direction: column; /* Stack circle and label vertically */
+            align-items: center; /* Center items horizontally */
+            text-align: center;
+            position: relative;
+            /* Allow steps to shrink but give them a base width */
+            flex: 0 0 auto; /* Don't grow, don't shrink initially, use auto basis */
+            width: 100px; /* Set a fixed width for consistency */
+            padding: 0 0.5rem; /* Horizontal padding within the step */
+        }
+        /* Add space between steps */
+        .pipeline-step:not(:last-child) {
+             margin-right: 1rem; /* Adjust this value to control spacing */
+        }
+
+
+        /* Circle representing the stage */
+        .pipeline-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%; /* Make it a circle */
+            display: flex;
+            align-items: center; /* Center icon vertically */
+            justify-content: center; /* Center icon horizontally */
+            margin-bottom: 8px; /* Space below circle */
+            z-index: 1; /* Keep circle above the line */
+            border: 2px solid; /* Default border */
+            transition: background-color 0.3s, border-color 0.3s; /* Smooth color transitions */
+            flex-shrink: 0; /* Prevent circle from shrinking if container is too small */
+        }
+
+        /* Connecting line between steps */
+        .pipeline-line {
+            position: absolute;
+            top: 15px; /* Position line vertically centered with circles */
+            /* Adjust left/right to connect centers based on fixed width and margin */
+            left: calc(50% + 25px); /* Start slightly after the center of the current circle (half width + padding) */
+            width: calc(100% - 50px + 1rem); /* Span to the next step's center (step width - circle width + margin) */
+            height: 2px; /* Thickness of the line */
+            background-color: #d1d5db; /* Default line color (gray-300) */
+            z-index: 0; /* Line is behind the circles */
+            transition: background-color 0.3s ease-in-out; /* Smooth transition for line color */
+        }
+        /* Remove the line from the last step */
+        .pipeline-step:last-child .pipeline-line {
+            display: none;
+        }
+
+        /* Text label for the stage */
+        .pipeline-label {
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500; /* Medium weight */
+            color: #6b7280; /* Default text color (gray-500) */
+            margin-top: 4px; /* Space above label */
+            line-height: 1.2; /* Improve readability if text wraps */
+        }
+
+        /* --- Status Specific Styles --- */
+
+        /* Completed Step */
+        .pipeline-step.completed .pipeline-circle {
+            background-color: #10b981; /* Emerald-500 */
+            border-color: #059669; /* Emerald-600 */
+            color: white; /* Icon color */
+        }
+        .pipeline-step.completed .pipeline-line {
+            background-color: #10b981; /* Emerald-500 */
+        }
+        .pipeline-step.completed .pipeline-label {
+            color: #1f2937; /* Gray-800 */
+        }
+
+        /* Current Step */
+        .pipeline-step.current .pipeline-circle {
+            background-color: #3b82f6; /* Blue-500 */
+            border-color: #2563eb; /* Blue-600 */
+            color: white; /* Icon color */
+            /* Apply pulse animation */
+            animation: pulse 2s infinite;
+        }
+         .pipeline-step.current .pipeline-label {
+            color: #1d4ed8; /* Blue-700 */
+            font-weight: 600; /* Bolder label for current step */
+        }
+        /* Ensure line connecting to the current step (from a completed one) is colored */
+         .pipeline-step.completed + .pipeline-step.current .pipeline-line {
+             background-color: #10b981; /* Line before current should be green if previous is complete */
+         }
+         /* Ensure lines after the current step remain the default color (handled by default .pipeline-line style) */
+
+
+        /* Upcoming Step */
+        .pipeline-step.upcoming .pipeline-circle {
+            background-color: #ffffff; /* White background */
+            border-color: #d1d5db; /* Gray-300 border */
+            color: #9ca3af; /* Gray-400 icon/text color */
+        }
+        .pipeline-step.upcoming .pipeline-label {
+            color: #9ca3af; /* Gray-400 */
+        }
+
+        /* Checkmark Icon (for completed steps) */
+        .checkmark {
+            width: 16px;
+            height: 16px;
+            stroke-width: 3; /* Make checkmark bolder */
+        }
+
+        /* Pulse animation for current step's circle */
+        @keyframes pulse {
+            0%, 100% {
+                /* Start and end state: no shadow */
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); /* Blue-500 with opacity */
+            }
+            50% {
+                /* Mid state: expanded, faded shadow */
+                box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); /* Expand shadow and fade out */
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-gray-800 text-white shadow-md sticky top-0 z-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                 <svg class="h-8 w-auto text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                 </svg>
+                <span class="ml-2 text-xl font-semibold">LawPilot Client Portal</span>
+            </div>
+            <div>
+                <span class="text-sm mr-4 hidden sm:inline">Welcome, Mr. Anil Sharma</span>
+                <button class="text-sm text-indigo-300 hover:text-white">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Case Overview</h1>
+
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 sm:px-6 py-4">
+                <h2 id="case-title" class="text-xl sm:text-2xl font-semibold text-white truncate">Sharma v. State of AP</h2>
+                <p id="case-number" class="text-indigo-100 text-xs sm:text-sm">CNR No: APHC01-012345-2024</p>
+            </div>
+
+            <div class="p-4 sm:p-6 space-y-6">
+
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-4 text-center md:text-left">Case Progress</h3>
+                    <div class="pipeline-container">
+                        <div class="pipeline-step completed">
+                            <div class="pipeline-circle">
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div class="pipeline-label">Case Filed</div>
+                            <div class="pipeline-line"></div> </div>
+
+                        <div class="pipeline-step completed">
+                            <div class="pipeline-circle">
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div class="pipeline-label">Pleadings</div>
+                            <div class="pipeline-line"></div> </div>
+
+                        <div class="pipeline-step current">
+                            <div class="pipeline-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 9.586V7z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="pipeline-label">Evidence</div>
+                            <div class="pipeline-line"></div> </div>
+
+                        <div class="pipeline-step upcoming">
+                            <div class="pipeline-circle">
+                                <span class="text-xs font-bold">4</span>
+                            </div>
+                            <div class="pipeline-label">Arguments</div>
+                            <div class="pipeline-line"></div> </div>
+
+                        <div class="pipeline-step upcoming">
+                            <div class="pipeline-circle">
+                                <span class="text-xs font-bold">5</span>
+                            </div>
+                            <div class="pipeline-label">Judgment</div>
+                            </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 border-t border-gray-200 pt-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Next Hearing Date</h3>
+                        <p id="next-hearing-date" class="text-base sm:text-lg font-semibold text-red-600">May 15, 2025</p>
+                        <p id="next-hearing-time" class="text-xs sm:text-sm text-gray-600">11:00 AM</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Court Details</h3>
+                        <p id="court-name" class="text-base sm:text-lg font-semibold text-gray-800">High Court of Andhra Pradesh</p>
+                        <p id="court-bench" class="text-xs sm:text-sm text-gray-600">Bench II, Hon'ble Justice R. Singh</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Your Advocate</h3>
+                        <p id="your-advocate" class="text-base sm:text-lg font-semibold text-gray-800">Adv. Pilot</p>
+                         <p class="text-xs sm:text-sm text-gray-600">LawPilot Associates</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Opposing Party</h3>
+                        <p id="opposing-party" class="text-base sm:text-lg font-semibold text-gray-800">State of Andhra Pradesh</p>
+                         <p class="text-xs sm:text-sm text-gray-600">(Represented by Public Prosecutor)</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Opposing Counsel</h3>
+                        <p id="opposing-counsel" class="text-base sm:text-lg font-semibold text-gray-800">Mr. K. Venkat Rao</p>
+                        <p class="text-xs sm:text-sm text-gray-600">Senior Public Prosecutor</p>
+                    </div>
+                     <div class="flex items-center justify-center bg-gray-50 p-4 rounded-lg border border-gray-200 md:col-span-2 lg:col-span-1">
+                         <button type="button" class="w-full inline-flex justify-center items-center px-4 py-2 border border-indigo-600 shadow-sm text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                             <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-2.138a1.121 1.121 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                             </svg>
+                             Request Update
+                         </button>
+                     </div>
+                </div>
+
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-2">Case Summary</h3>
+                    <p id="case-summary" class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                        This case pertains to an appeal filed against the lower court's decision regarding property dispute Ref No. LC-DIS-567/2023. Key arguments revolve around the interpretation of the inheritance act and documented evidence presented during the initial trial. We are currently in the evidence stage, presenting witness testimonies and supporting documents.
+                    </p>
+                </div>
+
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-4">Recent Updates & Timeline</h3>
+                    <div id="case-timeline" class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 text-center">
+                                <span class="block text-xs sm:text-sm font-semibold text-indigo-600">Apr 27</span>
+                                <span class="block text-xs text-gray-500">2025</span>
+                            </div>
+                            <div class="ml-4 p-3 bg-gray-50 rounded-lg border border-gray-200 flex-1">
+                                <p class="text-sm font-medium text-gray-800">Witness Examination</p>
+                                <p class="text-xs sm:text-sm text-gray-600 mt-1">Examination of witness Mr. Suresh Gupta completed. Cross-examination scheduled for next hearing.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 text-center">
+                                <span class="block text-xs sm:text-sm font-semibold text-indigo-600">Apr 15</span>
+                                <span class="block text-xs text-gray-500">2025</span>
+                            </div>
+                            <div class="ml-4 p-3 bg-gray-50 rounded-lg border border-gray-200 flex-1">
+                                <p class="text-sm font-medium text-gray-800">Document Submission</p>
+                                <p class="text-xs sm:text-sm text-gray-600 mt-1">Submitted certified copies of land records (Doc Ref: #DOC-SH-015, #DOC-SH-016).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 text-center">
+                                <span class="block text-xs sm:text-sm font-semibold text-indigo-600">Mar 30</span>
+                                <span class="block text-xs text-gray-500">2025</span>
+                            </div>
+                            <div class="ml-4 p-3 bg-gray-50 rounded-lg border border-gray-200 flex-1">
+                                <p class="text-sm font-medium text-gray-800">Previous Hearing</p>
+                                <p class="text-xs sm:text-sm text-gray-600 mt-1">Arguments heard on preliminary objections. Objections overruled. Case moved to evidence stage.</p>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+
+                <div class="border-t border-gray-200 pt-6">
+                     <h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-4">Related Documents</h3>
+                     <div id="case-documents" class="space-y-3">
+                         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-blue-50 rounded-md border border-blue-200 gap-2">
+                             <div class="flex items-center min-w-0"> <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /> </svg>
+                                 <div class="min-w-0"> <p class="text-sm font-medium text-gray-800 truncate">Appeal_Memo_Filed.pdf</p>
+                                     <p class="text-xs text-gray-500">Uploaded: Apr 10, 2025</p>
+                                 </div>
+                             </div>
+                             <a href="#" class="w-full sm:w-auto mt-2 sm:mt-0 ml-0 sm:ml-4 inline-flex justify-center items-center px-3 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                 Download
+                             </a>
+                         </div>
+                         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-blue-50 rounded-md border border-blue-200 gap-2">
+                             <div class="flex items-center min-w-0">
+                                 <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /> </svg>
+                                 <div class="min-w-0">
+                                     <p class="text-sm font-medium text-gray-800 truncate">Vakalatnama_Signed_Very_Long_Filename_To_Test_Truncation.pdf</p>
+                                     <p class="text-xs text-gray-500">Uploaded: Mar 25, 2025</p>
+                                 </div>
+                             </div>
+                             <a href="#" class="w-full sm:w-auto mt-2 sm:mt-0 ml-0 sm:ml-4 inline-flex justify-center items-center px-3 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                 Download
+                             </a>
+                         </div>
+                         </div>
+                </div>
+
+            </div> </div> </main>
+
+    <footer class="bg-gray-700 text-gray-300 text-center py-4 mt-8">
+        <p class="text-sm">&copy; 2025 LawPilot. All rights reserved.</p>
+         <p class="text-xs mt-1">Disclaimer: Information provided is for reference only and subject to change.</p>
+    </footer>
+
+    <div id="loading" class="loading-indicator">
+        <p>Loading case details...</p>
+        </div>
+
+    <script>
+        // Basic JavaScript (optional) - e.g., for showing/hiding loading indicator
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const loadingIndicator = document.getElementById('loading');
+        //     // Show loading indicator
+        //     loadingIndicator.style.display = 'block';
+
+        //     // Simulate fetching data
+        //     setTimeout(() => {
+        //         // Hide loading indicator after data is 'loaded'
+        //         loadingIndicator.style.display = 'none';
+
+        //         // --- DYNAMICALLY UPDATE PIPELINE ---
+        //         // Example: Fetch current status (e.g., 'Evidence')
+        //         const currentStatus = 'Evidence'; // Replace with actual fetched status
+
+        //         const pipelineSteps = document.querySelectorAll('.pipeline-step');
+        //         const stages = ['Case Filed', 'Pleadings', 'Evidence', 'Arguments', 'Judgment']; // Match labels
+        //         let foundCurrent = false;
+
+        //         pipelineSteps.forEach((step, index) => {
+        //             const label = step.querySelector('.pipeline-label').textContent;
+        //             step.classList.remove('completed', 'current', 'upcoming'); // Reset classes
+
+        //             if (foundCurrent) {
+        //                 step.classList.add('upcoming');
+        //             } else if (label === currentStatus) {
+        //                 step.classList.add('current');
+        //                 foundCurrent = true;
+        //             } else {
+        //                 step.classList.add('completed');
+        //             }
+        //         });
+        //         // --- END DYNAMIC PIPELINE UPDATE ---
+
+
+        //         // You would also populate other fields:
+        //         // document.getElementById('case-title').textContent = fetchedData.title;
+        //         // etc.
+
+        //     }, 1500); // Simulate 1.5 second load time
+        // });
+    </script>
+
+</body>
+</html>
+
