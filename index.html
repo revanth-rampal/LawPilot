@@ -11,7 +11,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-sans">
     <div class="relative flex h-screen overflow-hidden">
 
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-gray-800 text-gray-200 flex flex-col transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 md:static md:flex-shrink-0">
@@ -21,7 +21,7 @@
                  </svg>
                 <span class="ml-2 text-xl font-semibold text-white">LawPilot</span>
             </div>
-            <nav id="sidebar-nav" class="flex-1 overflow-y-auto py-4 space-y-1 px-2">
+            <nav id="sidebar-nav" class="flex-1 overflow-y-auto py-4 space-y-1 px-2 hide-scrollbar">
                 <a href="#" data-target="dashboard" class="sidebar-link sidebar-link-active group flex items-center px-3 py-2 text-sm font-medium rounded-md">
                     <svg class="mr-3 h-6 w-6 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5"/></svg>
                     Dashboard
@@ -66,6 +66,31 @@
                      <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
                     Time Tracking
                 </a>
+
+                <a href="#" data-target="court-services" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /> </svg>
+                    Court Services
+                </a>
+                <a href="#" data-target="doc-templates" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25V3.75m0 0h-1.5a1.125 1.125 0 0 0-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125v-1.5m-11.25-1.5H8.25m.75 1.5V15m0 0V9.75m0 5.25v1.5m0 0H12m0 0h1.5m0 0h1.5m-3 0H9.75m0 0H8.25m11.25 0h-1.5m1.5 0h1.5m0 0h-1.5m-1.5 0h-1.5" /> </svg>
+                    Document Templates
+                </a>
+                <a href="#" data-target="knowledge-base" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /> </svg>
+                    Knowledge Base
+                </a>
+                <a href="#" data-target="expense-tracking" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V6.375m0 0V18m0 0h18M3 7.5h18M3 12h18m-9 5.25h.008v.008H12v-.008Z" /> </svg>
+                    Expense Tracking
+                </a>
+                <a href="#" data-target="team-management" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" /> </svg>
+                    Team Management
+                </a>
+                <a href="#" data-target="ai-tools" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.25 18.75l.813 2.846.813-2.846a4.5 4.5 0 0 0 3.09-3.09L25.75 12l-2.846-.813a4.5 4.5 0 0 0-3.09-3.09L18.25 5.25l-.813 2.846a4.5 4.5 0 0 0-3.09 3.09L11.25 12l2.846.813a4.5 4.5 0 0 0 3.09 3.09Z" /> </svg>
+                    AI Tools
+                </a>
                 <a href="#" data-target="reports-analytics" class="sidebar-link text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
                     <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v18h16.5V3H3.75Zm1.5 0V1.5M8.25 3V1.5M12 3V1.5M15.75 3V1.5M3.75 18v1.5M8.25 18v1.5M12 18v1.5M15.75 18v1.5M8.25 6h7.5M8.25 9h7.5M8.25 12h7.5M8.25 15h7.5" /></svg>
                     Reports & Analytics
@@ -76,7 +101,7 @@
                     <div class="flex items-center">
                         <div>
                             <img class="inline-block h-9 w-9 rounded-full" src="https://placehold.co/36x36/7f9cf5/ffffff?text=AP" alt="User Avatar Placeholder - AP for Advocate Pilot" onerror="this.onerror=null; this.src='https://placehold.co/36x36/eee/ccc?text=??';">
-                            </div>
+                        </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium text-white">Adv. Pilot</p>
                             <p class="text-xs font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
@@ -88,14 +113,17 @@
 
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
 
-        <div class="flex-1 flex flex-col overflow-hidden pt-16"> <header class="fixed top-0 left-0 right-0 w-full bg-white shadow-sm h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-20 md:ml-64" id="top-navbar"> <button id="mobile-menu-toggle" class="text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
+        <div class="flex-1 flex flex-col overflow-hidden pt-16">
+            <header class="fixed top-0 left-0 right-0 w-full bg-white shadow-sm h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-20 md:ml-64" id="top-navbar">
+                <button id="mobile-menu-toggle" class="text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
                     <span class="sr-only">Open sidebar</span>
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
 
-                 <div class="flex-1 flex justify-center px-4 md:ml-0"> <div class="max-w-lg w-full lg:max-w-xs">
+                <div class="flex-1 flex justify-center px-4 md:ml-0">
+                     <div class="max-w-lg w-full lg:max-w-xs">
                         <label for="search" class="sr-only">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -108,13 +136,14 @@
                     </div>
                 </div>
 
-                <div class="ml-4 flex items-center md:ml-6"> <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <div class="ml-4 flex items-center md:ml-6">
+                    <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span class="sr-only">View notifications</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.017 5.454 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                         </svg>
                     </button>
-                    </div>
+                </div>
             </header>
 
             <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 hide-scrollbar">
@@ -133,7 +162,8 @@
                                         <div class="ml-4 w-0 flex-1">
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">Upcoming Deadlines</dt>
-                                                <dd class="text-lg font-medium text-gray-900">5</dd> </dl>
+                                                <dd class="text-lg font-medium text-gray-900">5</dd>
+                                            </dl>
                                         </div>
                                     </div>
                                      <div class="mt-3 text-right">
@@ -150,7 +180,8 @@
                                         <div class="ml-4 w-0 flex-1">
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">Active Cases</dt>
-                                                <dd class="text-lg font-medium text-gray-900">23</dd> </dl>
+                                                <dd class="text-lg font-medium text-gray-900">23</dd>
+                                            </dl>
                                         </div>
                                     </div>
                                      <div class="mt-3 text-right">
@@ -167,7 +198,8 @@
                                         <div class="ml-4 w-0 flex-1">
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">Pending Conflict Checks</dt>
-                                                <dd class="text-lg font-medium text-gray-900">2</dd> </dl>
+                                                <dd class="text-lg font-medium text-gray-900">2</dd>
+                                            </dl>
                                         </div>
                                     </div>
                                      <div class="mt-3 text-right">
@@ -184,7 +216,8 @@
                                         <div class="ml-4 w-0 flex-1">
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">Unread Client Messages</dt>
-                                                <dd class="text-lg font-medium text-gray-900">4</dd> </dl>
+                                                <dd class="text-lg font-medium text-gray-900">4</dd>
+                                            </dl>
                                         </div>
                                     </div>
                                      <div class="mt-3 text-right">
@@ -192,7 +225,6 @@
                                      </div>
                                 </div>
                             </div>
-
                             <div class="bg-white overflow-hidden shadow rounded-lg lg:col-span-2">
                                  <div class="px-4 py-5 sm:p-6">
                                     <div class="flex items-center mb-4">
@@ -202,12 +234,15 @@
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
                                                 <dt class="text-sm font-medium text-gray-500 truncate">Time Tracking</dt>
-                                                <dd class="text-lg font-medium text-gray-900">Today: 3.5 hrs</dd> </dl>
+                                                <dd class="text-lg font-medium text-gray-900">Today: 3.5 hrs</dd>
+                                            </dl>
                                         </div>
                                     </div>
                                     <div class="space-y-3">
-                                        <p class="text-sm text-gray-600">Currently tracking: <span class="font-medium">Research - Sharma v State</span></p> <div class="flex items-center justify-between">
-                                             <span class="text-xl font-mono text-gray-800">01:25:42</span> <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        <p class="text-sm text-gray-600">Currently tracking: <span class="font-medium">Research - Sharma v State</span></p>
+                                        <div class="flex items-center justify-between">
+                                             <span class="text-xl font-mono text-gray-800">01:25:42</span>
+                                             <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                                  Stop Timer
                                              </button>
                                         </div>
@@ -231,7 +266,8 @@
                                                     <div class="relative flex space-x-3">
                                                         <div><span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white"><svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 12.293a1 1 0 001.414 1.414l2-2A1 1 0 0011 11V7z" clip-rule="evenodd" /></svg></span></div>
                                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                            <div><p class="text-sm text-gray-500">10:00 AM - 11:00 AM</p><p class="font-medium text-gray-900">Client Meeting - Mr. Kumar</p></div> <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Meeting</span></div>
+                                                            <div><p class="text-sm text-gray-500">10:00 AM - 11:00 AM</p><p class="font-medium text-gray-900">Client Meeting - Mr. Kumar</p></div>
+                                                            <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Meeting</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -242,7 +278,8 @@
                                                     <div class="relative flex space-x-3">
                                                         <div><span class="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center ring-8 ring-white"><svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg></span></div>
                                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                            <div><p class="text-sm text-gray-500">Due Today</p><p class="font-medium text-gray-900">File Vakalatnama - Sharma Case</p></div> <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Deadline</span></div>
+                                                            <div><p class="text-sm text-gray-500">Due Today</p><p class="font-medium text-gray-900">File Vakalatnama - Sharma Case</p></div>
+                                                            <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Deadline</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,19 +289,23 @@
                                                     <div class="relative flex space-x-3">
                                                         <div><span class="h-8 w-8 rounded-full bg-yellow-500 flex items-center justify-center ring-8 ring-white"><svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.78.78 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96 2.074 2.074 0 01-.025.654zM10 12.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zM10 15c-1.01 0-1.94-.164-2.8-.429A6.5 6.5 0 0010 16.5a6.5 6.5 0 002.8-.929c-.86.265-1.79.43-2.8.43z" /></svg></span></div>
                                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                            <div><p class="text-sm text-gray-500">02:00 PM - 02:30 PM</p><p class="font-medium text-gray-900">Call with Opposing Counsel (Gupta)</p></div> <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Call</span></div>
+                                                            <div><p class="text-sm text-gray-500">02:00 PM - 02:30 PM</p><p class="font-medium text-gray-900">Call with Opposing Counsel (Gupta)</p></div>
+                                                            <div class="text-right text-sm whitespace-nowrap text-gray-500"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Call</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            </ul>
+                                        </ul>
                                     </div>
                                      <div class="mt-6 text-right">
                                          <a href="#" data-target="calendar" class="sidebar-link-trigger text-sm font-medium text-indigo-600 hover:text-indigo-500">View Full Calendar &rarr;</a>
                                      </div>
                                 </div>
                             </div>
-                        </div> </div> <div id="content-leads-intake" class="page-content hidden">
+                        </div>
+                    </div>
+
+                    <div id="content-leads-intake" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Leads & Client Intake</h2>
@@ -308,7 +349,9 @@
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-conflict-check" class="page-content hidden">
+                    </div>
+
+                    <div id="content-conflict-check" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Run Conflict Check</h2>
                             <form>
@@ -345,7 +388,9 @@
                                 </div>
                                 </div>
                         </div>
-                    </div> <div id="content-cases" class="page-content hidden">
+                    </div>
+
+                    <div id="content-cases" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                              <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Manage Cases</h2>
@@ -388,7 +433,9 @@
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-documents" class="page-content hidden">
+                    </div>
+
+                    <div id="content-documents" class="page-content hidden">
                          <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                              <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Document Management</h2>
@@ -433,13 +480,15 @@
                                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                                                  <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
                                                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Download</a>
-                                                </td>
+                                             </td>
                                         </tr>
                                          </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-calendar" class="page-content hidden">
+                    </div>
+
+                    <div id="content-calendar" class="page-content hidden">
                          <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Court Diary & Tasks</h2>
@@ -452,7 +501,9 @@
                                 </div>
                             <p class="text-sm text-gray-500 mt-4">Track court dates, client meetings, deadlines, and manage tasks.</p>
                         </div>
-                    </div> <div id="content-clients" class="page-content hidden">
+                    </div>
+
+                    <div id="content-clients" class="page-content hidden">
                          <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                              <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Client List</h2>
@@ -484,7 +535,9 @@
                                 </li>
                                 </ul>
                         </div>
-                    </div> <div id="content-client-portal" class="page-content hidden">
+                    </div>
+
+                    <div id="content-client-portal" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Client Portal Management</h2>
                             <p class="text-sm text-gray-600 mb-4">Manage client access, view recent activity, and configure portal settings.</p>
@@ -492,7 +545,10 @@
                                 <div class="border rounded-lg p-4">
                                     <h3 class="text-lg font-medium text-gray-900 mb-2">Recent Messages</h3>
                                      <ul class="divide-y divide-gray-200">
-                                        <li class="py-2"><span class="font-medium">Anil Sharma:</span> Query regarding invoice #INV-0345... <span class="text-xs text-gray-500 float-right">2h ago</span></li> <li class="py-2"><span class="font-medium">Priya Singh:</span> Uploaded required documents. <span class="text-xs text-gray-500 float-right">1d ago</span></li> <li class="py-2"><span class="font-medium">System:</span> Portal access granted to R. Gupta. <span class="text-xs text-gray-500 float-right">2d ago</span></li> </ul>
+                                        <li class="py-2"><span class="font-medium">Anil Sharma:</span> Query regarding invoice #INV-0345... <span class="text-xs text-gray-500 float-right">2h ago</span></li>
+                                        <li class="py-2"><span class="font-medium">Priya Singh:</span> Uploaded required documents. <span class="text-xs text-gray-500 float-right">1d ago</span></li>
+                                        <li class="py-2"><span class="font-medium">System:</span> Portal access granted to R. Gupta. <span class="text-xs text-gray-500 float-right">2d ago</span></li>
+                                        </ul>
                                      <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 mt-2 inline-block">View All Messages &rarr;</a>
                                 </div>
                                 <div class="border rounded-lg p-4">
@@ -505,7 +561,9 @@
                                 </div>
                              </div>
                         </div>
-                    </div> <div id="content-billing" class="page-content hidden">
+                    </div>
+
+                    <div id="content-billing" class="page-content hidden">
                          <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Billing & Invoicing (GST Ready)</h2>
@@ -515,19 +573,22 @@
                                 </button>
                             </div>
                             <div class="p-3 bg-blue-50 border border-blue-200 rounded-md mb-4 text-blue-700 text-sm">
-                                 <svg class="inline-block h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A.75.75 0 0 0 10 14.5h.75a.75.75 0 0 0 .75-.75V10a.75.75 0 0 0-.75-.75H9Z" clip-rule="evenodd" /></svg>
+                                 <svg class="inline-block h-5 w-5 mr-1 align-text-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A.75.75 0 0 0 10 14.5h.75a.75.75 0 0 0 .75-.75V10a.75.75 0 0 0-.75-.75H9Z" clip-rule="evenodd" /></svg>
                                  Invoices generated include options for GST calculation (CGST, SGST, IGST) as per Indian regulations.
                              </div>
                              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                                 <div class="bg-red-50 border border-red-200 rounded-lg p-4">
                                     <dt class="text-sm font-medium text-red-600 truncate">Overdue Invoices</dt>
-                                    <dd class="mt-1 text-2xl font-semibold text-red-800">₹1,25,000</dd> </div>
+                                    <dd class="mt-1 text-2xl font-semibold text-red-800">₹1,25,000</dd>
+                                </div>
                                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                                     <dt class="text-sm font-medium text-yellow-600 truncate">Pending (Sent)</dt>
-                                    <dd class="mt-1 text-2xl font-semibold text-yellow-800">₹5,50,000</dd> </div>
+                                    <dd class="mt-1 text-2xl font-semibold text-yellow-800">₹5,50,000</dd>
+                                </div>
                                 <div class="bg-green-50 border border-green-200 rounded-lg p-4">
                                     <dt class="text-sm font-medium text-green-600 truncate">Paid (Last 30 days)</dt>
-                                    <dd class="mt-1 text-2xl font-semibold text-green-800">₹8,72,000</dd> </div>
+                                    <dd class="mt-1 text-2xl font-semibold text-green-800">₹8,72,000</dd>
+                                </div>
                             </div>
                             <h3 class="text-lg font-medium text-gray-900 mb-3">Recent Invoices</h3>
                             <div class="overflow-x-auto">
@@ -563,7 +624,9 @@
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-trust-accounting" class="page-content hidden">
+                    </div>
+
+                    <div id="content-trust-accounting" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                              <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Accounts (Trust/Office)</h2>
@@ -579,10 +642,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                     <dt class="text-sm font-medium text-blue-600 truncate">Current Trust Balance</dt>
-                                    <dd class="mt-1 text-2xl font-semibold text-blue-800">₹15,34,050</dd> </div>
+                                    <dd class="mt-1 text-2xl font-semibold text-blue-800">₹15,34,050</dd>
+                                </div>
                                 <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                     <dt class="text-sm font-medium text-gray-600 truncate">Last Reconciliation Date</dt>
-                                    <dd class="mt-1 text-xl font-semibold text-gray-800">Mar 31, 2025</dd> <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 mt-1">Run Reconciliation</button>
+                                    <dd class="mt-1 text-xl font-semibold text-gray-800">Mar 31, 2025</dd>
+                                    <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 mt-1">Run Reconciliation</button>
                                 </div>
                              </div>
                             <h3 class="text-lg font-medium text-gray-900 mb-3">Recent Trust Transactions</h3>
@@ -619,7 +684,9 @@
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-time-tracking" class="page-content hidden">
+                    </div>
+
+                    <div id="content-time-tracking" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <div class="sm:flex sm:items-center sm:justify-between mb-6">
                                 <h2 class="text-xl font-semibold text-gray-800">Time Entries</h2>
@@ -638,8 +705,10 @@
                                         </div>
                                     </div>
                                     <div class="space-y-3">
-                                        <p class="text-sm text-gray-600">Currently tracking: <span class="font-medium">Research - Sharma v State</span></p> <div class="flex items-center justify-between">
-                                            <span class="text-2xl font-mono text-gray-800">01:25:42</span> <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"> Stop Timer </button>
+                                        <p class="text-sm text-gray-600">Currently tracking: <span class="font-medium">Research - Sharma v State</span></p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-2xl font-mono text-gray-800">01:25:42</span>
+                                            <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"> Stop Timer </button>
                                         </div>
                                         <button type="button" class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> Start New Timer </button>
                                     </div>
@@ -678,7 +747,69 @@
                                 </table>
                             </div>
                         </div>
-                    </div> <div id="content-reports-analytics" class="page-content hidden">
+                    </div>
+
+                    <div id="content-court-services" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Court Services Integration</h2>
+                            <p class="text-sm text-gray-600">This section will provide integration with eCourts services, including automated case status fetching, cause list tracking, and downloading orders. (Feature under development)</p>
+                            <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for Court Services Features
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-doc-templates" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Document Templates</h2>
+                            <p class="text-sm text-gray-600">Manage and generate legal documents from pre-defined templates (e.g., Vakalatnama, Affidavits, Legal Notices). (Feature under development)</p>
+                             <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for Document Template Management
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-knowledge-base" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Internal Knowledge Base</h2>
+                            <p class="text-sm text-gray-600">Store and search internal notes, research findings, important precedents, and firm procedures. (Feature under development)</p>
+                             <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for Knowledge Base Content
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-expense-tracking" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Case Expense Tracking</h2>
+                            <p class="text-sm text-gray-600">Track case-specific expenses like court fees, travel, and copying for accurate billing. (Feature under development)</p>
+                             <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for Expense Tracking Features
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-team-management" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Team Management</h2>
+                            <p class="text-sm text-gray-600">Assign tasks and cases to team members, manage roles, and facilitate internal collaboration. (Feature under development)</p>
+                             <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for Team Management Features
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-ai-tools" class="page-content hidden">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">AI Assistant Tools</h2>
+                            <p class="text-sm text-gray-600">Explore AI-powered features like document summarization and clause identification. (Feature under development)</p>
+                             <div class="mt-6 p-6 bg-gray-100 rounded-lg text-center text-gray-500">
+                                Placeholder for AI Tools
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-reports-analytics" class="page-content hidden">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Reports & Analytics</h2>
                             <p class="text-sm text-gray-600 mb-6">Generate standard reports or build custom ones to gain insights into firm performance.</p>
@@ -710,7 +841,9 @@
                                 </div>
                              </div>
                         </div>
-                    </div> </div> </main>
+                    </div>
+
+                 </div> </main>
         </div> </div> <script src="script.js"></script>
 </body>
 </html>
